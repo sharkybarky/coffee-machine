@@ -22,6 +22,7 @@ class MoneyMachine:
         print("Please insert coins.")
         for coin in self.COIN_VALUES:
             self.money_received += int(input(f"How many {coin}?: ")) * self.COIN_VALUES[coin]
+            print(f"Total: {self.money_received:0.2f}")
         return self.money_received
 
     def make_payment(self, cost):
