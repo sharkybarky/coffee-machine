@@ -74,18 +74,20 @@ def print_report(money):
 def make_coffee(choice, res):
     print(f"Making a {choice}. Here you go!")
     choice_ingredients = dict(MENU[choice]["ingredients"])
-    res.update({key: [res[key][0] - choice_ingredients.get(key), res[key][1]] for key in choice_ingredients})
+    for ingredient in choice_ingredients:
+        res[ingredient][0] -= choice_ingredients[ingredient]
+    # res.update({key: [res[key][0] - choice_ingredients.get(key), res[key][1]] for key in choice_ingredients})
 
 
 def process_input(sales):
     choice_char = input("What would you like? 'e'xpresso, 'l'atte, 'c'appuccino: ")
     takings = 0
     match choice_char:
-        case "e":
+        case "e" | "expresso":
             choice = "expresso"
-        case "l":
+        case "l" | "latte":
             choice = "latte"
-        case "c":
+        case "c" | "cappuccino":
             choice = "cappuccino"
         case "off":
             print("SECRET WORD: Machine turning off...")
@@ -94,7 +96,8 @@ def process_input(sales):
             print_report(sales)
             return True, 0
         case _:
-            pass
+            print("Invalid option!")
+            return True, 0
 
     if check_resources(choice, resources):
         takings = process_coins(choice)
